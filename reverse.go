@@ -28,22 +28,42 @@ import (
 // 字符串转整形，且需判断溢出
 // go语言 Int 最大 num = 9223372036854775807
 
+// 题中３个测试用力均符合预期
+// 提交leetcode后，错误用例为
+//输入:
+//1534236469
+//输出
+//9646324351
+//预期结果
+//0
+//
+//所以，需要再加一个判断即可吧
+//待改进
+
 func reverse(x int) int {
 	str_num := strconv.Itoa(x)
 
-	var strs []string
+	var strs string
 
 	length := len(str_num)
 
-	for i := length; i >= 0; i++ {
-		if str_num[i] == '-' {
+	for i := (length - 1); i >= 0; i-- {
+		if string(str_num[i]) == "-" {
 			continue
 		}
-		strs = append(strs, str_num[i])
+		strs = strs + string(str_num[i])
 	}
 
-	res, err := strconv
+	if x < 0 {
+		strs = "-" + strs
+	}
 
+	res, err := strconv.Atoi(strs)
+	if err != nil {
+		return 0
+	}
+
+	return res
 }
 
 func main() {
