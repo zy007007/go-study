@@ -73,19 +73,20 @@ func twoSum(nums []int, target int) []int {
 	}
 
 	var res []int
-	for v, k := range copy_arr {
-		if k == ok[0] {
-			res = append(res, v)
-		}
+	if len(ok) == 2 {
+		for v, k := range copy_arr {
+			if k == ok[0] {
+				res = append(res, v)
 
-		if k == ok[1] {
-			res = append(res, v)
-		}
+			} else if k == ok[1] {
+				res = append(res, v)
+			}
 
-		if len(res) == 2 {
-			break
-		}
+			if len(res) == 2 {
+				break
+			}
 
+		}
 	}
 
 	return res
