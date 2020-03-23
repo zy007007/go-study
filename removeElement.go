@@ -70,7 +70,7 @@ func main() {
 	fmt.Printf("移除元素:")
 	fmt.Scanf("%d", &val)
 
-	fmt.Printf("输出:")
+	fmt.Printf("输出数组长度:")
 	fmt.Println(removeElement(arr, val))
 }
 
