@@ -12,7 +12,7 @@ type LinkNode struct {
 	next *LinkNode
 }
 
-//直接在队尾插入
+//直接在队尾插入，好理解，但是耗效率
 func InsertNode(head *LinkNode, newNode *LinkNode) {
 
 	temp := head
