@@ -19,4 +19,6 @@ func main() {
 
 	fmt.Printf("%v\n%v\n%v\n", intList, float8List, stringList)
 
+	intList = append([]int{-1}, intList...)
+	fmt.Println(intList)
 }

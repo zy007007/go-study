@@ -17,4 +17,6 @@ func main() {
 	fmt.Printf("test1[0:1][0] address:")
 	fmt.Println(&(test1[0:1][0]))
 
+	fmt.Println(1 / 2)
+
 }
