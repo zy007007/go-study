@@ -20,23 +20,56 @@ package main
 
 //个人思路
 //要慢慢开始想较快的思路，考虑时间和内存
-// 要在原 nums1 上面操作
+// 要在原 nums1 上面操作,那么就才用i i+1 i+2 相互赋值的方法
+
+// 一开始自己疯狂在试切片的插入，还整了threePoint.go arrIndexInsert.go　来测试
+// 还在探查中
+// 后来又想了先能解出测试用例，就用sort之后，将多余的0删除，发现哪里还是不对
+
+//　看看评论和解题吧
 
 import (
 	"fmt"
+	"sort"
 )
+
+func mergeComment(nums1 []int, m int, nums2 []int, n int) {
+
+	nums1 = append(nums1[:m], nums2[:n]...)
+
+	sort.Ints(nums1)
+}
 
 func merge(nums1 []int, m int, nums2 []int, n int) {
 
+	nums1 = append(nums1, nums2...)
+	fmt.Println(nums1)
+
+	sort.Ints(nums1)
+	fmt.Println("sort", nums1)
+
+	zeros := len(nums1) - n
+
+	fmt.Println(nums1[zeros:len(nums1)])
+
+}
+
+func insertStringSliceCopy(slice, insertion []int, index int) []int {
+	result := make([]int, len(slice)+len(insertion))
+	at := copy(result, slice[:index])
+	at += copy(result[at:], insertion)
+	copy(result[at:], slice[index:])
+	return result
 }
 
 func main() {
 	var n, m int
-	var n1, n2 []int
 	fmt.Scanf("%d %d", &m, &n)
+	var n1 []int
+	var n2 []int
 
 	fmt.Printf("n1:")
-	for i := 0; i < m; i++ {
+	for i := 0; i < m+n; i++ {
 		var data int
 		fmt.Scanf("%d", &data)
 		n1 = append(n1, data)
@@ -52,3 +85,5 @@ func main() {
 	merge(n1, m, n2, n)
 	fmt.Println(n1)
 }
+
+// 收获：[:...] 这个操作还是需要多熟悉啊，穿上点点就不认识了
