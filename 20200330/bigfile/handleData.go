@@ -77,12 +77,6 @@ func cleanDataGoroutine(line []string) map[string]int {
 	return dict
 }
 
-// 用通道chan改进
-func cleanDataChan(line []string) map[string]int {
-
-	return nil
-}
-
 // 求每分钟的和
 func sumData(data map[string]int) map[string]int {
 	res := make(map[string]int)
