@@ -29,7 +29,7 @@ func removeElements(head *ListNode, val int) *ListNode {
 	return cur
 }
 
-func removeElements(head *ListNode, val int) *ListNode {
+func removeElementsComment(head *ListNode, val int) *ListNode {
 	tmp := new(ListNode)
 	tmp.Next = head
 	pre, cur := tmp, head
