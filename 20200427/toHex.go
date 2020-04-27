@@ -39,13 +39,16 @@ func toHex(num int) string {
 	ans := []rune{}
 	hash := [26]rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'}
 
-	for num != 0 {
+	for {
 		t := num % 16
 		num /= 16
 
 		ans = append([]rune{hash[t]}, ans...) //头插入一个值
+		if num == 0 {
+			break
+		}
 	}
-	return ans
+	return string(ans)
 }
 
 func main() {
