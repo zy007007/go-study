@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 func main() {
 	test := "zhaoyi3"
@@ -18,5 +21,7 @@ func main() {
 	fmt.Println(&(test1[0:1][0]))
 
 	fmt.Println(1 / 2)
+
+	fmt.Println(math.MinInt32 - 1)
 
 }
