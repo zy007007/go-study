@@ -1,0 +1,1 @@
+ansbile all -m ping 

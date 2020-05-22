@@ -1,0 +1,13 @@
+iptables -A INPUT -i eth1 -s 10.1.1.1 -j ACCEPT
+
+
+iptables -A INPUT -i eth0 -p tcp -s 10.1.1.1 -j DROP
+
+
+iptables -A FORWARD -s 10.230.1.1 -d 10.163.1.1 -p tcp --dport 8080 -j ACCEPT
+
+
+iptables -A POSTROUTING -s 10.1.1.2 -j SNAT --to-source 10.1.1.6
+
+
+
