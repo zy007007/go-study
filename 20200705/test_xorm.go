@@ -33,12 +33,26 @@ func(this *Article) TableName() string {
 	return "article"
 }
 
+var aRepo *Article = new(Article)
+
+func (this *Article) Insert() (int64, error) {
+	return Insert(this)
+}
+
+
+
+
 var orm *xorm.Engine
+
+func Insert(beans ...interface{}) (int64, error) {
+	return orm.Insert(beans...)
+}
+
  
 //创建orm引擎
 func init() {
 	var err error
-	orm, err = xorm.NewEngine("mysql", "root:pwd~@tcp(127.0.0.1:3306)/blog?charset=utf8")
+	orm, err = xorm.NewEngine("mysql", "root:thisislifeZy007~@tcp(127.0.0.1:3306)/blog?charset=utf8")
 	if err != nil {
 		log.Fatal("数据库连接失败:", err)
 		fmt.Println("数据库连接失败:", err)
@@ -51,7 +65,10 @@ func main() {
 	//var article Article
 	//table := "article"
 	//article.Title = "测试数据，敬请期待，10.66.66.66"
-	//article.Words = "测试数据，敬请期待，10.777.777.777"
+	//article.Words = "测试数据，敬请期待，10.777.777.777"  // 这种格式，居然返回不到id
+
+	article := &Article{Title:"测试数据", Words:"测试数据"} // 这种格式，新增数据后，可以返回article.Id
+	res, err := article.Insert()
 
 	//res, err := orm.Update(&Article{Title:"测试数据，敬请期待，10.66.66.66"}) // test ok，目前4条数据，res返回了4，全部数据修改
 	//res, err := orm.ID(22).Update(&Article{Title:"测试数据，敬请期待，10.1.1.1"}) // test ok，一开始int类型不一致导致出错
@@ -69,7 +86,7 @@ func main() {
 	//res, err := orm.Table("article").Where("title=?", title).QueryString() // test ok
 
 	// 模糊查询
-	title := "zhao"
+	//title := "zhao"
 	//res, err := orm.Table("article").QueryString("select * from article where title like ?", "%"+title+"%") // test ok
 	//res, err := orm.Table("article").Where("title like ?", "%"+title+"%").QueryInterface() // test ok,输出的string是字节
 
@@ -81,6 +98,6 @@ func main() {
 	}
 
 	//fmt.Println(lastid, "res", res)
-	fmt.Println("res", res)
+	fmt.Println("res", res, article.Id)
 	//fmt.Println(article)
 }

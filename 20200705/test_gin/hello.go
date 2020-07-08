@@ -7,10 +7,15 @@ import (
 	"encoding/json"
 )
 
+type Acl struct {
+	Type	string
+	Area	string
+}
+
 func main() {
 	r := gin.Default()
 	r.POST("/form", func(c *gin.Context) {
-		data := make(map[string]interface{})
+		var data Acl
 	
 		fmt.Println(c.Request.Body)
 		body, err := ioutil.ReadAll(c.Request.Body)
