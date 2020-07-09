@@ -12,7 +12,7 @@ func Start() {
 	configRoutes(router)
 
 	time.Sleep(1 * time.Second) //等待cache加载
-	router.Run(config.Config().Http.Listen)
+	router.Run()
 }
 
 func configRoutes(router *gin.Engine) {
