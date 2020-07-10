@@ -7,9 +7,13 @@ import (
 	"encoding/json"
 )
 
+type Area struct {
+	Name	string
+}
+
 type Acl struct {
-	Type	string
-	Area	string
+	Type		string
+	AreaName	[]Area
 }
 
 func main() {
@@ -30,17 +34,10 @@ func main() {
 
 		c.JSON(200, data)
 
-		fmt.Println(data.Type, data.Area)
+		fmt.Println(data)
 	})
 
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
 
 //测试接口
-//[GIN] 2020/07/05 - 20:28:38 | 200 |     105.538µs |       127.0.0.1 | POST     "/form"
-//&{0xc0001f2e20 <nil> <nil> false true {0 0} false false false 0x6dcdd0}
-//sec c4
-
-
-//curl 127.0.0.1:8080/form -d '{"type":"sec", "area":"c4"}'
-//{"Type":"sec","Area":"c4"}

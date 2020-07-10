@@ -44,7 +44,7 @@ func (this *Article) Insert() (int64, error) {
 
 var orm *xorm.Engine
 
-func Insert(beans Article) (int64, error) {
+func Insert(beans *Article) (int64, error) {
 	return orm.Insert(&beans)
 }
 
@@ -67,8 +67,8 @@ func main() {
 	//article.Title = "测试数据，敬请期待，10.66.66.66"
 	//article.Words = "测试数据，敬请期待，10.777.777.777"  // 这种格式，居然返回不到id
 
-	article := &Article{Title:"测试数据", Words:"测试数据"} // 这种格式，新增数据后，可以返回article.Id
-	res, err := Insert(article)
+	//article := &Article{Title:"测试数据", Words:"测试数据"} // 这种格式，新增数据后，可以返回article.Id
+	//res, err := Insert(article)
 
 	//res, err := orm.Update(&Article{Title:"测试数据，敬请期待，10.66.66.66"}) // test ok，目前4条数据，res返回了4，全部数据修改
 	//res, err := orm.ID(22).Update(&Article{Title:"测试数据，敬请期待，10.1.1.1"}) // test ok，一开始int类型不一致导致出错
@@ -78,8 +78,9 @@ func main() {
 	//var lastid int64
 	// 按id获取一个数据
 	//var article []map[string]string
-	//id := 22
-	//res, err := orm.Table("article").Where("id=?", id).Get(&article) 
+	id := 21
+	article := new(Article)
+	res, err := orm.Table("article").Where("id=?", id).Get(article) 
 
 	// 获取符合某列条件
 	//title := "zhaoyi"

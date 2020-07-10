@@ -7,7 +7,8 @@ import (
 )
  
 func main() {
- cmd := exec.Command("/bin/bash", "-c", `tail /var/log/nginx/access.log  | awk '{print $1","$4}'`)
+ //cmd := exec.Command("/bin/bash", "-c", `tail /var/log/nginx/access.log  | awk '{print $1","$4}'`)
+ cmd := exec.Command("/bin/bash", "-c", "curl -s --user-agent foobar https://ip.cn/index.php?ip=113.200.212.74 | grep '所在地理位置'| awk -F '>' '{print $9}' | awk -F '<' '{print $1}'")
  
  //创建获取命令输出管道
  stdout, err := cmd.StdoutPipe()
