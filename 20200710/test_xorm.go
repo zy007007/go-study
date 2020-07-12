@@ -62,7 +62,7 @@ func init() {
 }
 
 func main() {
-	//var article Article
+	var article Article
 	//table := "article"
 	//article.Title = "测试数据，敬请期待，10.66.66.66"
 	//article.Words = "测试数据，敬请期待，10.777.777.777"  // 这种格式，居然返回不到id
@@ -79,8 +79,8 @@ func main() {
 	// 按id获取一个数据
 	//var article []map[string]string
 	id := 21
-	article := new(Article)
-	res, err := orm.Table("article").Where("id=?", id).Get(article) 
+	//article := new(Article)
+	res, err := orm.Table("article").Where("id=?", id).Get(&article) 
 
 	// 获取符合某列条件
 	//title := "zhaoyi"
@@ -99,6 +99,6 @@ func main() {
 	}
 
 	//fmt.Println(lastid, "res", res)
-	fmt.Println("res", res, article.Id)
+	fmt.Println("res", res, article.Title)
 	//fmt.Println(article)
 }

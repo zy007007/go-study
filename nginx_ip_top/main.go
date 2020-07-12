@@ -2,7 +2,11 @@ package main
 
 import (
 	"fmt"
+	"strings"
 	"github.com/hpcloud/tail"
+	"github.com/gomodule/redigo/redis"
+	"os/exec"
+	"bufio"
 )
 
 type Visitip struct {
@@ -10,22 +14,33 @@ type Visitip struct {
 	Area 	string
 }
 
-func AddtoRedis(data *Visitip) (bool, error) {
+var r redis.Conn
 
+func AddtoRedis(data *Visitip) (bool, error) {
+	key := data.Ip + ":" + data.Area
+	fmt.Println(key)
+	_, err := redis.Int64(r.Do("INCR", key))
+	if err != nil {
+		fmt.Println("incr %s failed", key)
+		return false, err
+	}
+	return true, nil
 }
 
-
-func HandleLog(data string) (*Visitip, error) {
-	arr := string.Split(data, " ")
+func HandleLog(data string) (*Visitip) {
+	arr := strings.Split(data, " ")
 
 	area, err := IpArea(arr[0])
+	if err != nil {
+		fmt.Println("HandleLog's IpArea failed")
+	}
 
 	vi := &Visitip{
 		Ip:arr[0],
-		Area:area
+		Area:area,
 	}
 
-	return vi, nil
+	return vi
 }
 
 func IpArea(ip string) (string, error) {
@@ -36,17 +51,17 @@ func IpArea(ip string) (string, error) {
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {
 		fmt.Printf("Error:can not obtain stdout pipe for command:%s\n", err)
-		return
+		return "", nil
 	}
 
 	if err := cmd.Start(); err != nil {
 		fmt.Println("Error:The command is err,", err)
-		return
+		return "", nil
 	}
 
 	outputBuf := bufio.NewReader(stdout)
 
-	for {
+	//for {
 
 		output, _, err := outputBuf.ReadLine()
 		if err != nil {
@@ -54,29 +69,36 @@ func IpArea(ip string) (string, error) {
 			if err.Error() != "EOF" {
 				fmt.Printf("Error :%s\n", err)
 			}
-			return
+			return "", nil
 		}
 		res = string(output)
-	}
+	//	fmt.Println(res)
+	//}
 
 	if err := cmd.Wait(); err != nil {
 		fmt.Println("wait:", err.Error())
-		return
+		return "", nil
 	}
-
+	//fmt.Println("res", res)
+	return res, nil
 }
 
 func main() {
-	t, err := tail.TailFile("/var/log/nginx/access.log", tail.Config{Follow: true})
+
+   	r, _ = redis.Dial("tcp", "127.0.0.1:6379")
+    	defer r.Close()
+
+
+	//t, err := tail.TailFile("/var/log/nginx/access.log", tail.Config{Follow: true})
+	t, err := tail.TailFile("access.log", tail.Config{Follow: true})
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	for line := range t.Lines {
-		fmt.Println(line.Text)
 		data := HandleLog(line.Text)
 		res, err := AddtoRedis(data)
-		if err != nil {
+		if !res {
 			fmt.Println("add to redis failed", err.Error())
 		}
 	}
