@@ -62,7 +62,27 @@ func init() {
 }
 
 func main() {
-	var article Article
+	//title := "十年之间"
+	//res := make([]*Article, 0)
+	//var res []string
+	//err := orm.Table("article").Cols("title").Find(&res)
+	res, err := orm.Exist(&Article{Title:"十年之间1"})
+	//err := orm.Find(&res)
+	//title := "zhaoyi"
+	//words := "8808测试数据"
+	//edit := &Article{Words:"5555"}
+	//res, err := orm.Where("title=? and words=?", title, words).Update(edit)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("res", res)
+//	for _, v := range res {
+//		//fmt.Println(v.Title)
+//		fmt.Println(v)
+//
+//	}
+
+	//var article Article
 	//table := "article"
 	//article.Title = "测试数据，敬请期待，10.66.66.66"
 	//article.Words = "测试数据，敬请期待，10.777.777.777"  // 这种格式，居然返回不到id
@@ -78,9 +98,9 @@ func main() {
 	//var lastid int64
 	// 按id获取一个数据
 	//var article []map[string]string
-	id := 21
+	//id := 21
 	//article := new(Article)
-	res, err := orm.Table("article").Where("id=?", id).Get(&article) 
+	//res, err := orm.Table("article").Where("id=?", id).Get(&article) 
 
 	// 获取符合某列条件
 	//title := "zhaoyi"
@@ -94,11 +114,11 @@ func main() {
 
 	// 获取最新id
 	//res, err := orm.Limit(1).Table(table).Desc("id").Cols("id").Get(&lastid) // test ok
-	if err != nil {
-		fmt.Println(err)
-	}
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
 
 	//fmt.Println(lastid, "res", res)
-	fmt.Println("res", res, article.Title)
+	//fmt.Println("res", res, article.Title)
 	//fmt.Println(article)
 }

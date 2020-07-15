@@ -9,11 +9,13 @@ import (
 
 type Area struct {
 	Name	string
+	BigCity string
 }
 
 type Acl struct {
 	Type		string
 	AreaName	[]Area
+	AgeNow		int64
 }
 
 func main() {
