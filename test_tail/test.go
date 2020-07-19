@@ -84,7 +84,8 @@ func IpArea(ip string) (string, error) {
 }
 
 func main() {
-
+	//area, _ := IpArea("113.200.212.74")
+	//fmt.Printf(area)
 
 
 	//t, err := tail.TailFile("access.log", tail.Config{Follow: true})
