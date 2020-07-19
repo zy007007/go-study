@@ -27,7 +27,7 @@ var orm *xorm.Engine
 //创建orm引擎
 func init() {
 	var err error
-	orm, err = xorm.NewEngine("mysql", "root:thisislifeZy007~@tcp(127.0.0.1:3306)/blog?charset=utf8")
+	orm, err = xorm.NewEngine("mysql", "root:feZy007~@tcp(127.0.0.1:3306)/blog?charset=utf8")
 	if err != nil {
 		log.Fatal("数据库连接失败:", err)
 		fmt.Println("数据库连接失败:", err)
